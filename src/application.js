@@ -120,7 +120,7 @@ class ServerApplication {
 
         // Default Error Handler route
         this.app.use((error, req, res, next) => {
-            this.logger.info('[cowin-slot-checker][app][error] ' + error.message, res, true, error);
+            this.logger.error('[cowin-slot-checker][app][error] ' + error.message);
             return res.status(error.status || 500).jsonp({
                 message: error.message,
                 code: error.status,
@@ -150,7 +150,7 @@ class ServerApplication {
                 error.message = `${error.message} CRID : ` + process.currentRes.get(constants.CORR_ID);
             }
             this.logger.info('[cowin-slot-checker][unhandledRejection][reason] ' + error.message);
-            return res.status(500).send({ message: errorConst.GENERAL_ERROR_MSG });
+            //return res.status(500).send({ message: errorConst.GENERAL_ERROR_MSG });
         });
     }
 }

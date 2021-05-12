@@ -3,6 +3,8 @@ const config = require('../config/config');
 const HttpRequest = require('../utilities/http-request');
 const httpRequest = new HttpRequest();
 const smsHelper = require('../helpers/sms');
+const mailHelper = require('../helpers/mail');
+const constants = require('../utilities/constants');
 
 const registerURL = config.hosts.registerURL;
 const coWin_headers = config.coWin_headers;
@@ -80,12 +82,12 @@ exports.findForPincodes = async (req, res) => {
         pincodes.forEach((code) => {
             parallel_promise.push(
                 httpRequest.get(
-                {
-                    url: `${registerURL}/v2/appointment/sessions/public/findByPin?pincode=${code}&date=${formatted_date}`,
-                    headers: coWin_headers,
-                },
-                res,
-            ))
+                    {
+                        url: `${registerURL}/v2/appointment/sessions/public/findByPin?pincode=${code}&date=${formatted_date}`,
+                        headers: coWin_headers,
+                    },
+                    res,
+                ))
         });
 
         let all_slots = await Promise.all(parallel_promise);
@@ -94,7 +96,7 @@ exports.findForPincodes = async (req, res) => {
             available_slots = available_slots.concat(slot.sessions)
         })
         return available_slots;
-        
+
     } catch (err) {
         throwErrorHandler(err, '[findForPincodes]', res, true);
     }
@@ -109,12 +111,12 @@ exports.findForDistricts = async (req, res) => {
         districts.forEach((districtId) => {
             parallel_promise.push(
                 httpRequest.get(
-                {
-                    url: `${registerURL}/v2/appointment/sessions/public/findByDistrict?district_id=${districtId}&date=${formatted_date}`,
-                    headers: coWin_headers,
-                },
-                res,
-            ))
+                    {
+                        url: `${registerURL}/v2/appointment/sessions/public/findByDistrict?district_id=${districtId}&date=${formatted_date}`,
+                        headers: coWin_headers,
+                    },
+                    res,
+                ))
         });
 
         let all_slots = await Promise.all(parallel_promise);
@@ -123,7 +125,7 @@ exports.findForDistricts = async (req, res) => {
             available_slots = available_slots.concat(slot.sessions)
         })
         return available_slots;
-        
+
     } catch (err) {
         throwErrorHandler(err, '[findForDistricts]', res, true);
     }
@@ -131,21 +133,81 @@ exports.findForDistricts = async (req, res) => {
 
 exports.triggerNotification = async (data, req) => {
     try {
-        if(Array.isArray(data) && req.body.mobile) {
+        if (Array.isArray(data) && req.body.mobile) {
 
-        let mobile = req.body.mobile.slice(-10);
-        let message = `finding vaccine for pins -- ${req.body.pincodes}`;
+            let mobile = req.body.mobile.slice(-10);
+            let { message, content } = format_data_for_notification(data, req);
 
-        return smsHelper.send_sms({mobileNo: mobile, message: message})
+            if (message) {
+                smsHelper.send_sms({ mobileNo: mobile, message: message })
+            }
+
+            if (req.body.email && content) {
+                mailHelper.send_mail({
+                    to: req.body.email,
+                    subject: constants.vaccine_available_notification,
+                    content
+                });
+            }
+
+            return;
 
         } else {
             logger.warn(`[cowin-slot-checker][services][triggerNotification]Invalid data format or mobile`);
             return;
         }
 
-    } catch(err) {
+    } catch (err) {
         throwErrorHandler(err, '[triggerNotification]', res, true);
     }
+}
+
+function format_data_for_notification(data, req) {
+    let body_data = '';
+    let sms_data = ``;
+    let html = `
+        <html>
+            <p> Vaccine Data </p>
+            <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Address</th>
+                    <th>District Name</th>
+                    <th>Pincode</th>
+                    <th>Fees_Type</th>
+                    <th>Fees</th>
+                    <th>Available_Capacity</th>
+                    <th>Vaccine_Type</th>
+                    <th>Date</th>
+                    <th>Max_Age</th>
+                </tr>
+    `
+    if (Array.isArray(data)) {
+        data.forEach((d) => {
+            body_data += `<tr>
+                <td>${d.name}</td>
+                <td>${d.address}</td>
+                <td>${d.district_name}</td>
+                <td>${d.pincode}</td>
+                <td>${d.fee_type}</td>
+                <td>${d.fee}</td>
+                <td>${d.available_capacity}</td>
+                <td><${d.vaccine}/td>
+                <td>${d.min_age_limit}</td>
+                <td>${d.date}</td>
+            </tr>
+            `
+            sms_data += `
+                ${d.name}, ${pincode}, ${vaccine}, ${date}
+            \n`
+        })
+    }
+    html = html + `${body_data}
+    </table>
+</html>
+`
+
+    return { content: html, message: sms_data }
 }
 
 function throwErrorHandler(err, method) {

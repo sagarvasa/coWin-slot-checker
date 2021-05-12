@@ -21,6 +21,13 @@ const local = {
             "premiumPassword": "passwordss",
             "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
         }
+    },
+    "mailConfig": {
+        "pepipost": {
+            "key": "1c45mdlmps alb64429022f2dabcdedkdkdl",
+            "url": "https://api.pepipost.com/v5/mail/send",
+            "from": "noreply-co@domain.com"
+        }
     }
 }
 
@@ -44,6 +51,13 @@ const staging = {
             "premiumUserId": "1234566789",
             "premiumPassword": "passwordss",
             "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
+        }
+    },
+    "mailConfig": {
+        "pepipost": {
+            "key": "1c45mdlmps alb64429022f2dabcdedkdkdl",
+            "url": "https://api.pepipost.com/v5/mail/send",
+            "from": "noreply-co@domain.com"
         }
     }
 }
@@ -69,6 +83,13 @@ const dev = {
             "premiumPassword": "passwordss",
             "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
         }
+    },
+    "mailConfig": {
+        "pepipost": {
+            "key": "1c45mdlmps alb64429022f2dabcdedkdkdl",
+            "url": "https://api.pepipost.com/v5/mail/send",
+            "from": "noreply-co@domain.com"
+        }
     }
 }
 
@@ -91,6 +112,13 @@ const production = {
         "premiumUserId": "1234566789",
         "premiumPassword": "passwordss",
         "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
+    },
+    "mailConfig": {
+        "pepipost": {
+            "key": "1c45mdlmps alb64429022f2dabcdedkdkdl",
+            "url": "https://api.pepipost.com/v5/mail/send",
+            "from": "noreply-co@domain.com"
+        }
     }
     
 }

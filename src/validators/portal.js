@@ -23,7 +23,8 @@ module.exports = {
         body: {
             "pincodes": Joi.array().items(Joi.string().length(6).regex(/^[0-9]+$/).required()).required(),
             "mobile": Joi.string().regex(/^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/).required(),
-            "date": Joi.date().required()
+            "date": Joi.date().required(),
+            "email": Joi.string().email().optional()
         },
         query: {
         },
@@ -33,7 +34,8 @@ module.exports = {
         body: {
             "districts": Joi.array().items(Joi.string().min(1).max(10).regex(/^[0-9]+$/).required()).required(),
             "mobile": Joi.string().regex(/^(\+91[\-\s]?)?[0]?(91)?[789]\d{9}$/).required(),
-            "date": Joi.date().required()
+            "date": Joi.date().required(),
+            "email": Joi.string().email().optional()
         },
         query: {
         },
