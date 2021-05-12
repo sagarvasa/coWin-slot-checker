@@ -5,7 +5,7 @@ module.exports = {
         body: {
         },
         query: {
-            "pincode": Joi.string().length(6).regex(/^[0-9]+$/).required(),
+            "pinCode": Joi.string().length(6).regex(/^[0-9]+$/).required(),
             "date": Joi.date().required()
         },
         param: {}
