@@ -36,6 +36,43 @@ exports.getDistrictByState = async (req, res) => {
     }
 }
 
+exports.findByPinCode = async (req, res) => {
+    try {
+        let pinCode = req.query.pinCode;
+        let date = new Date(req.query.date);
+        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        return await httpRequest.get(
+            {
+                url: `${registerURL}/v2/appointment/sessions/public/findByPin?pincode=${pinCode}&date=${formatted_date}`,
+                headers: coWin_headers,
+            },
+            res,
+        );
+    } catch (err) {
+        throwErrorHandler(err, '[findByPinCode]', res, true);
+    }
+}
+
+exports.findByDistrict = async (req, res) => {
+    try {
+        let districtId = req.query.districtId;
+        let date = new Date(req.query.date);
+        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        return await httpRequest.get(
+            {
+                url: `${registerURL}/v2/appointment/sessions/public/findByDistrict?district_id=${districtId}&date=${formatted_date}`,
+                headers: coWin_headers,
+            },
+            res,
+        );
+    } catch (err) {
+        throwErrorHandler(err, '[findByDistrict]', res, true);
+    }
+}
+
+
+
+
 function throwErrorHandler(err, method) {
     let msg = err.message;
     if (!msg) {

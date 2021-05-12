@@ -18,3 +18,21 @@ exports.getDistrictByState = async (req, res) => {
         return res.status(err.status || errorConst.INTERNAL_SERVER_ERROR).send(err);
       }
 }
+
+exports.findByPinCode = async (req, res) => {
+  try {
+      const data = await service.portal.findByPinCode(req, res);
+      return res.status(200).send(data);
+    } catch (err) {
+      return res.status(err.status || errorConst.INTERNAL_SERVER_ERROR).send(err);
+    }
+}
+
+exports.findByDistrict = async (req, res) => {
+  try {
+      const data = await service.portal.findByDistrict(req, res);
+      return res.status(200).send(data);
+    } catch (err) {
+      return res.status(err.status || errorConst.INTERNAL_SERVER_ERROR).send(err);
+    }
+}
