@@ -6,5 +6,7 @@ const controllers = require('../controllers');
 
 router.route('/ping').get(validate(validators.ping.getPing), controllers.ping.getPing);
 
+router.route('/states').get(controllers.portal.getStates);
+router.route('/districts/:state_id').get(controllers.portal.getDistrictByState);
 
 module.exports = router;
