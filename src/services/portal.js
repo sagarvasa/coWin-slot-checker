@@ -4,14 +4,14 @@ const HttpRequest = require('../utilities/http-request');
 const httpRequest = new HttpRequest();
 
 const registerURL = config.hosts.registerURL;
-const headers = config.headers;
+const coWin_headers = config.coWin_headers;
 
 exports.getStates = async (req, res) => {
     try {
         return await httpRequest.get(
             {
                 url: `${registerURL}/v2/admin/location/states`,
-                headers: headers,
+                headers: coWin_headers,
             },
             res,
         );
@@ -27,7 +27,7 @@ exports.getDistrictByState = async (req, res) => {
         return await httpRequest.get(
             {
                 url: `${registerURL}/v2/admin/location/districts/${state_id}`,
-                headers: headers,
+                headers: coWin_headers,
             },
             res,
         );
