@@ -1,4 +1,4 @@
-const { sendPremiumGupshupMsg, sendEnterpriseGupshupMsg } = require('../datasources/sms')
+const { sendPremiumGupshupMsg } = require('../datasources/sms')
 const logger = require('../utilities/winston')(__filename);
 const config = require('../config/config');
 const constants = require('../utilities/constants');
@@ -8,7 +8,7 @@ const gupshupConfig = config.gupshupConfig;
 exports.send_sms = ({ mobileNo, message, mask }) => {
     let countryCode = constants.COUNTRY_CODE_INDIA;
     let dialingCode = constants.IND_DIALING_CODE;
-    let sms_mask = mask ? mask : gupshupConfig.mask;
+    let sms_mask = mask ? mask : gupshupConfig.gupshupTrans.mask;
     mobileNo = dialingCode.substr(1) + mobileNo;
 
     const msgConfig = {
