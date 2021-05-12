@@ -10,6 +10,16 @@ const local = {
         "accept-language": "hi_IN",
         'user-agent': 'sagar_macbook_pro_' + Math.random()
     },
+    "gupshupConfig": {
+        "gupshupTrans": {
+            "mask": "MASKR",
+            "postUrl": "http://enterprise.smsgupshup.com/apps/apis/global/rest.php",
+            "enterpriseUserId": "maskId",
+            "host": "http://premium.smsgupshup.com",
+            "enterprisePassword": "maskPwd",
+            "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
+        }
+    }
 }
 
 const staging = {
@@ -22,6 +32,16 @@ const staging = {
         "accept-language": "hi_IN",
         'user-agent': 'sagar_staging_macbook_pro_' + Math.random()
     },
+    "gupshupConfig": {
+        "gupshupTrans": {
+            "mask": "MASKR",
+            "postUrl": "http://enterprise.smsgupshup.com/apps/apis/global/rest.php",
+            "enterpriseUserId": "maskId",
+            "host": "http://premium.smsgupshup.com",
+            "enterprisePassword": "maskPwd",
+            "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
+        }
+    }
 }
 
 const dev = {
@@ -34,6 +54,16 @@ const dev = {
         "accept-language": "hi_IN",
         'user-agent': 'sagar_dev_macbook_pro_' + Math.random()
     },
+    "gupshupConfig": {
+        "gupshupTrans": {
+            "mask": "MASKR",
+            "postUrl": "http://enterprise.smsgupshup.com/apps/apis/global/rest.php",
+            "enterpriseUserId": "maskId",
+            "host": "http://premium.smsgupshup.com",
+            "enterprisePassword": "maskPwd",
+            "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
+        }
+    }
 }
 
 const production = {
@@ -46,6 +76,16 @@ const production = {
         "accept-language": "hi_IN",
         'user-agent': 'sagar_prod_macbook_pro_' + Math.random()
     },
+    "gupshupConfig": {
+        "gupshupTrans": {
+            "mask": "MASKR",
+            "postUrl": "http://enterprise.smsgupshup.com/apps/apis/global/rest.php",
+            "enterpriseUserId": "maskId",
+            "host": "http://premium.smsgupshup.com",
+            "enterprisePassword": "maskPwd",
+            "url": "/GatewayAPI/rest?method=SendMessage&send_to=%%mobile_number%%&msg=%%message%%&msg_type=TEXT&userid=%%user_id%%&auth_scheme=plain&password=%%password%%&v=1.1&format=text&mask="
+        }
+    }
 }
 
 const config = { local, staging, dev, production };

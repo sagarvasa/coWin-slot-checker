@@ -2,6 +2,7 @@ const logger = require('../utilities/winston')(__filename);
 const config = require('../config/config');
 const HttpRequest = require('../utilities/http-request');
 const httpRequest = new HttpRequest();
+const smsHelper = require('../helpers/sms');
 
 const registerURL = config.hosts.registerURL;
 const coWin_headers = config.coWin_headers;
@@ -70,8 +71,82 @@ exports.findByDistrict = async (req, res) => {
     }
 }
 
+exports.findForPincodes = async (req, res) => {
+    try {
+        let pincodes = req.body.pincodes;
+        let date = new Date(req.body.date);
+        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        let parallel_promise = [];
+        pincodes.forEach((code) => {
+            parallel_promise.push(
+                httpRequest.get(
+                {
+                    url: `${registerURL}/v2/appointment/sessions/public/findByPin?pincode=${code}&date=${formatted_date}`,
+                    headers: coWin_headers,
+                },
+                res,
+            ))
+        });
 
+        let all_slots = await Promise.all(parallel_promise);
+        let available_slots = [];
+        all_slots.forEach((slot) => {
+            available_slots = available_slots.concat(slot.sessions)
+        })
+        return available_slots;
+        
+    } catch (err) {
+        throwErrorHandler(err, '[findForPincodes]', res, true);
+    }
+}
 
+exports.findForDistricts = async (req, res) => {
+    try {
+        let districts = req.body.districts;
+        let date = new Date(req.body.date);
+        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        let parallel_promise = [];
+        districts.forEach((districtId) => {
+            parallel_promise.push(
+                httpRequest.get(
+                {
+                    url: `${registerURL}/v2/appointment/sessions/public/findByDistrict?district_id=${districtId}&date=${formatted_date}`,
+                    headers: coWin_headers,
+                },
+                res,
+            ))
+        });
+
+        let all_slots = await Promise.all(parallel_promise);
+        let available_slots = [];
+        all_slots.forEach((slot) => {
+            available_slots = available_slots.concat(slot.sessions)
+        })
+        return available_slots;
+        
+    } catch (err) {
+        throwErrorHandler(err, '[findForDistricts]', res, true);
+    }
+}
+
+exports.triggerNotification = async (data, req) => {
+    try {
+        if(Array.isArray(data) && req.body.mobile) {
+
+        let mobile = req.body.mobile.slice(-10);
+        let message = `finding vaccine for pins -- ${req.body.pincodes}`;
+
+        return smsHelper.send_sms({mobileNo: mobile, message: message})
+
+        } else {
+            logger.warn(`[cowin-slot-checker][services][triggerNotification]Invalid data format or mobile`);
+            return;
+        }
+
+    } catch(err) {
+        throwErrorHandler(err, '[triggerNotification]', res, true);
+    }
+}
 
 function throwErrorHandler(err, method) {
     let msg = err.message;
@@ -83,7 +158,7 @@ function throwErrorHandler(err, method) {
     const error = err;
     error.message = msg;
     error.status = status;
-    logger.info(`[cowin-slot-checker][services][rest]${method} err ${msg}`);
+    logger.error(`[cowin-slot-checker][services][rest]${method} err ${msg}`);
     throw error;
 }
 

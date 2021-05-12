@@ -36,3 +36,27 @@ exports.findByDistrict = async (req, res) => {
       return res.status(err.status || errorConst.INTERNAL_SERVER_ERROR).send(err);
     }
 }
+
+exports.notifyForPincodes = async (req, res) => {
+  try {
+      const data = await service.portal.findForPincodes(req, res);
+      if(Array.isArray(data) && req.body.mobile) {
+        service.portal.triggerNotification(data, req);
+      }
+      return res.status(200).send(data);
+    } catch (err) {
+      return res.status(err.status || errorConst.INTERNAL_SERVER_ERROR).send(err);
+    }
+}
+
+exports.notifyForDistricts = async (req, res) => {
+  try {
+      const data = await service.portal.findForDistricts(req, res);
+      if(Array.isArray(data) && req.body.mobile) {
+        service.portal.triggerNotification(data, req);
+      }
+      return res.status(200).send(data);
+    } catch (err) {
+      return res.status(err.status || errorConst.INTERNAL_SERVER_ERROR).send(err);
+    }
+}

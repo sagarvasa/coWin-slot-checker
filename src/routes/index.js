@@ -11,5 +11,8 @@ router.route('/districts/:state_id').get(controllers.portal.getDistrictByState);
 router.route('/findByPin').get(validate(validators.portal.findByPinCode), controllers.portal.findByPinCode);
 router.route('/findByDistrict').get(validate(validators.portal.findByDistrict), controllers.portal.findByDistrict);
 
+router.route('/notifyForPincodes').post(validate(validators.portal.notifyForPincodes), controllers.portal.notifyForPincodes);
+router.route('/notifyForDistricts').post(validate(validators.portal.notifyForDistricts), controllers.portal.notifyForDistricts);
+
 
 module.exports = router;
