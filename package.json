@@ -1,26 +1,18 @@
 {
-  "name": "node-boilerplate",
+  "name": "cowin-slot-checker",
   "version": "1.0.0",
-  "description": "Boilerplate application for Node.js server with Express framework",
+  "description": "APIs to check availability of COVID-19 vaccine slots for CoWin portal across India",
   "main": "index.js",
   "scripts": {
     "start": "node src/index",
     "test": "./node_modules/jest/bin/jest.js",
     "test_coverage": "./node_modules/jest/bin/jest.js --coverage "
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sagarvasa/node-boilerplate.git"
-  },
   "keywords": [
     "Node.js"
   ],
   "author": "Sagar Vasa",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sagarvasa/node-boilerplate/issues"
-  },
-  "homepage": "https://github.com/sagarvasa/node-boilerplate#readme",
   "dependencies": {
     "axios": "0.21.1",
     "body-parser": "1.19.0",

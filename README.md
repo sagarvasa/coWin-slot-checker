@@ -1,1 +1,1 @@
-# node-boilerplate
+# cowin-slot-checker

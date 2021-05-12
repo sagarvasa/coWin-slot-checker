@@ -27,9 +27,6 @@ class ServerApplication {
         // Log incoming requests
         this.logRequest();
 
-        // Initialize Database
-        this.initializeDatabase();
-
         // Serve incoming routes
         this.serveRequest();
     }
@@ -41,16 +38,6 @@ class ServerApplication {
     async configureLoggingImport() {
         const logger = require('./utilities/winston')(__filename);
         return logger;
-    }
-
-    async initializeDatabase() {
-        try {
-            const MongoConnectionHelper = require('./helpers/mongo-connection');
-            const mongoHelper = new MongoConnectionHelper();
-            await mongoHelper.establishConnection();
-        } catch (e) {
-            this.logger.error('[boilerplate] Error in connecting database:: [error]: ' + e.message);
-        }
     }
 
     initializeDefaultMiddlewares() {
@@ -102,16 +89,16 @@ class ServerApplication {
             }
 
             if (req.body && Object.keys(req.body).length) {
-                this.logger.info('[boilerplate][URL]: ' + req.path + ' [Body] : ' + JSON.stringify(req.body), res);
+                this.logger.info('[cowin-slot-checker][URL]: ' + req.path + ' [Body] : ' + JSON.stringify(req.body), res);
             }
             if (req.headers && Object.keys(req.headers).length) {
-                this.logger.info('[boilerplate][URL]: ' + req.path + ' [Headers]: ' + JSON.stringify(req.headers), res);
+                this.logger.info('[cowin-slot-checker][URL]: ' + req.path + ' [Headers]: ' + JSON.stringify(req.headers), res);
             }
             if (req.query && Object.keys(req.query).length) {
-                this.logger.info('[boilerplate][URL]: ' + req.path + ' [Query] : ' + JSON.stringify(req.query), res);
+                this.logger.info('[cowin-slot-checker][URL]: ' + req.path + ' [Query] : ' + JSON.stringify(req.query), res);
             }
             if (req.params && Object.keys(req.params).length) {
-                this.logger.info('[boilerplate][URL]: ' + req.path + ' [Params] : ' + JSON.stringify(req.params), res);
+                this.logger.info('[cowin-slot-checker][URL]: ' + req.path + ' [Params] : ' + JSON.stringify(req.params), res);
             }
 
             next();
@@ -133,7 +120,7 @@ class ServerApplication {
 
         // Default Error Handler route
         this.app.use((error, req, res, next) => {
-            this.logger.info('[boilerplate][app][error] ' + error.message, res, true, error);
+            this.logger.info('[cowin-slot-checker][app][error] ' + error.message, res, true, error);
             return res.status(error.status || 500).jsonp({
                 message: error.message,
                 code: error.status,
@@ -151,7 +138,7 @@ class ServerApplication {
             if (process.currentRes) {
                 error.message = `${error.message} CRID : ` + process.currentRes.get(constants.CORR_ID);
             }
-            this.logger.info('[boilerplate][uncaughtException][reason] ' + error.message);
+            this.logger.info('[cowin-slot-checker][uncaughtException][reason] ' + error.message);
         });
 
         process.on('unhandledRejection', (reason, promise) => {
@@ -162,7 +149,7 @@ class ServerApplication {
             if (process.currentRes) {
                 error.message = `${error.message} CRID : ` + process.currentRes.get(constants.CORR_ID);
             }
-            this.logger.info('[boilerplate][unhandledRejection][reason] ' + error.message);
+            this.logger.info('[cowin-slot-checker][unhandledRejection][reason] ' + error.message);
             return res.status(500).send({ message: errorConst.GENERAL_ERROR_MSG });
         });
     }
