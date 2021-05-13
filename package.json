@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node src/index",
     "test": "./node_modules/jest/bin/jest.js",
-    "test_coverage": "./node_modules/jest/bin/jest.js --coverage "
+    "test_coverage": "./node_modules/jest/bin/jest.js --coverage ",
+    "cron": "node src/cron",
+    "cron-server": "npm start & npm run cron"
   },
   "keywords": [
     "Node.js",
@@ -22,6 +24,7 @@
     "express-validation": "1.0.2",
     "jest": "26.6.3",
     "joi": "14.3.1",
+    "node-cron": "3.0.0",
     "path": "0.12.7",
     "shortid": "2.2.16",
     "util": "0.12.3",

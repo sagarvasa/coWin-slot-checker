@@ -6,7 +6,7 @@ APIs to check availability of COVID-19 vaccine slots for CoWin portal across Ind
 2. Clone/Fork the repo in your workspace
 3. Go to repository & install the dependancies using `npm install`
 4. Update the configuration (sms/mail credentials) in src/config/config.js file
-4. Run command `npm start` to start the server
+5. Run command `npm start` to start the server (<b>Not to be executed for CRON</b>)
 
 # APIs
 1. Get list of states
@@ -44,4 +44,11 @@ curl --location --request POST 'http://localhost:3000/notifyForDistricts.json' \
     "email": "sagar123@domain.com"
 }'
 
-
+# Cron
+In order to run cron, instead of `npm start`, please execute command `npm run cron-server`.
+Please update below constants under src/utilities/constants.js file if applicable
+1. cron_minute_interval  ---> Minute interval for running cron. current value : 5
+2. cron_notifier_mobile  ---> Mobile number on which sms to be sent
+3. cron_notifier_email   ---> Email to be sent to notifier
+4. vaccine_date          ---> Vaccine slot date for which availability needs to be checked
+5. cron_pincodes         ---> List of pincodes for which availability needs to be checked
