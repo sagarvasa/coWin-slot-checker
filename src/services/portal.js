@@ -138,10 +138,10 @@ exports.triggerNotification = async (data, req) => {
             let mobile = req.body.mobile.slice(-10);
             let { message, content } = format_data_for_notification(data, req);
 
-            message = `${constants.message_prefix} ${message}`;
+            let sms_message = `${constants.message_prefix} ${message}`;
             
             if (message) {
-                smsHelper.send_sms({ mobileNo: mobile, message: message })
+                smsHelper.send_sms({ mobileNo: mobile, message: sms_message })
             }
 
             if (req.body.email && content && message) {  // Send only if message & content both are present
