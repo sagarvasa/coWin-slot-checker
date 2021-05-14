@@ -43,7 +43,7 @@ exports.findByPinCode = async (req, res) => {
     try {
         let pinCode = req.query.pinCode;
         let date = new Date(req.query.date);
-        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        let formatted_date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
         return await httpRequest.get(
             {
                 url: `${registerURL}/v2/appointment/sessions/public/findByPin?pincode=${pinCode}&date=${formatted_date}`,
@@ -60,7 +60,7 @@ exports.findByDistrict = async (req, res) => {
     try {
         let districtId = req.query.districtId;
         let date = new Date(req.query.date);
-        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        let formatted_date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
         return await httpRequest.get(
             {
                 url: `${registerURL}/v2/appointment/sessions/public/findByDistrict?district_id=${districtId}&date=${formatted_date}`,
@@ -77,7 +77,7 @@ exports.findForPincodes = async (req, res) => {
     try {
         let pincodes = req.body.pincodes;
         let date = new Date(req.body.date);
-        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        let formatted_date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
         let parallel_promise = [];
         pincodes.forEach((code) => {
             parallel_promise.push(
@@ -106,7 +106,7 @@ exports.findForDistricts = async (req, res) => {
     try {
         let districts = req.body.districts;
         let date = new Date(req.body.date);
-        let formatted_date = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`
+        let formatted_date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
         let parallel_promise = [];
         districts.forEach((districtId) => {
             parallel_promise.push(
