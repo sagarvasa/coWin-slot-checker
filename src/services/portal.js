@@ -138,6 +138,8 @@ exports.triggerNotification = async (data, req) => {
             let mobile = req.body.mobile.slice(-10);
             let { message, content } = format_data_for_notification(data, req);
 
+            message = `${constants.message_prefix} ${message}`;
+            
             if (message) {
                 smsHelper.send_sms({ mobileNo: mobile, message: message })
             }
@@ -192,12 +194,12 @@ function format_data_for_notification(data, req) {
                 <td>${d.fee_type}</td>
                 <td>${d.fee}</td>
                 <td>${d.available_capacity}</td>
-                <td><${d.vaccine}/td>
+                <td>${d.vaccine}</td>
                 <td>${d.date}</td>
                 <td>${d.min_age_limit}</td>
             </tr>
             `
-            sms_data += `${d.name}, ${d.pincode}, ${d.vaccine}, ${d.date}\n`
+            sms_data += `${d.pincode} ${d.available_capacity} ${d.name}\n`
         })
     }
     html = html + `${body_data}

@@ -15,6 +15,7 @@ define('COUNTRY_CODE_INDIA', 'IND');
 define('IND_DIALING_CODE', '+91');
 
 define('vaccine_available_notification', 'Vaccine available notification !!');
+define('message_prefix', 'Hi, Your Vaccine info from coWin is')
 
 define('cron_port', 3030),
 define('cron_minute_interval', 5)
