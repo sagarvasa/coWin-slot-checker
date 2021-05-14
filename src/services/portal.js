@@ -158,7 +158,7 @@ exports.triggerNotification = async (data, req) => {
         }
 
     } catch (err) {
-        throwErrorHandler(err, '[triggerNotification]', res, true);
+        throwErrorHandler(err, '[triggerNotification]');
     }
 }
 
@@ -193,13 +193,11 @@ function format_data_for_notification(data, req) {
                 <td>${d.fee}</td>
                 <td>${d.available_capacity}</td>
                 <td><${d.vaccine}/td>
-                <td>${d.min_age_limit}</td>
                 <td>${d.date}</td>
+                <td>${d.min_age_limit}</td>
             </tr>
             `
-            sms_data += `
-                ${d.name}, ${pincode}, ${vaccine}, ${date}
-            \n`
+            sms_data += `${d.name}, ${d.pincode}, ${d.vaccine}, ${d.date}\n`
         })
     }
     html = html + `${body_data}
