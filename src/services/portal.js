@@ -142,7 +142,7 @@ exports.triggerNotification = async (data, req) => {
                 smsHelper.send_sms({ mobileNo: mobile, message: message })
             }
 
-            if (req.body.email && content) {
+            if (req.body.email && content && message) {  // Send only if message & content both are present
                 mailHelper.send_mail({
                     to: req.body.email,
                     subject: constants.vaccine_available_notification,
