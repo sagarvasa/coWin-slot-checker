@@ -27,6 +27,7 @@ module.exports = {
             "email": Joi.string().email().optional()
         },
         query: {
+            "age_group": Joi.string().min(1).max(3).regex(/^[0-9]+$/).optional().valid(['18', '45'])
         },
         param: {}
     },
@@ -38,6 +39,7 @@ module.exports = {
             "email": Joi.string().email().optional()
         },
         query: {
+            "age_group": Joi.string().min(1).max(3).regex(/^[0-9]+$/).optional().valid(['18', '45'])
         },
         param: {}
     },

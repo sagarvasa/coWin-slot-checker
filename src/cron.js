@@ -11,7 +11,7 @@ const serverHost = `${process.env.HOST || 'http://localhost'}:${process.env.PORT
 
 cron.schedule(pattern, () => {
     const config = {
-        url: `${serverHost}/notifyForPincodes.json`,
+        url: `${serverHost}/notifyForPincodes.json?age_group=${constants.cron_age_group}`,
         headers: {
             'Content-Type': 'application/json'
         },

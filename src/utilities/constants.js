@@ -17,9 +17,10 @@ define('IND_DIALING_CODE', '+91');
 define('vaccine_available_notification', 'Vaccine available notification !!');
 define('message_prefix', 'Hi, Your Vaccine info from coWin is')
 
-define('cron_port', 3030),
-define('cron_minute_interval', 5)
-define('cron_pincodes', ["560017", "560038", "560075"])
-define('cron_notifier_mobile', '9090909090')
-define('cron_notifier_email', 'sagar123@domain.com')
-define('vaccine_date', '2021/05/14')
+define('cron_port', 3030);
+define('cron_minute_interval', 5);
+define('cron_pincodes', ["560017", "560038", "560075"]);
+define('cron_notifier_mobile', '9090909090');
+define('cron_notifier_email', 'sagar123@domain.com');
+define('vaccine_date', '2021/05/24');
+define('cron_age_group', 45);

@@ -77,6 +77,7 @@ exports.findForPincodes = async (req, res) => {
     try {
         let pincodes = req.body.pincodes;
         let date = new Date(req.body.date);
+        let age_group = req.query.age_group;
         let formatted_date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
         let parallel_promise = [];
         pincodes.forEach((code) => {
@@ -95,6 +96,10 @@ exports.findForPincodes = async (req, res) => {
         all_slots.forEach((slot) => {
             available_slots = available_slots.concat(slot.sessions)
         })
+
+        available_slots = available_slots.filter((slot) => {
+            return (age_group ? slot.available_capacity > 0 && slot.min_age_limit === parseInt(age_group) : slot.available_capacity > 0);
+        })
         return available_slots;
 
     } catch (err) {
@@ -106,6 +111,7 @@ exports.findForDistricts = async (req, res) => {
     try {
         let districts = req.body.districts;
         let date = new Date(req.body.date);
+        let age_group = req.query.age_group;
         let formatted_date = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`
         let parallel_promise = [];
         districts.forEach((districtId) => {
@@ -123,6 +129,9 @@ exports.findForDistricts = async (req, res) => {
         let available_slots = [];
         all_slots.forEach((slot) => {
             available_slots = available_slots.concat(slot.sessions)
+        })
+        available_slots = available_slots.filter((slot) => {
+           return (age_group ? slot.available_capacity > 0 && slot.min_age_limit === parseInt(age_group) : slot.available_capacity > 0);
         })
         return available_slots;
 
@@ -179,6 +188,8 @@ function format_data_for_notification(data, req) {
                     <th>Fees_Type</th>
                     <th>Fees</th>
                     <th>Available_Capacity</th>
+                    <th>Dose 1 Available_Capacity</th>
+                    <th>Dose 2 Available_Capacity</th>
                     <th>Vaccine_Type</th>
                     <th>Date</th>
                     <th>Max_Age</th>
@@ -194,6 +205,8 @@ function format_data_for_notification(data, req) {
                 <td>${d.fee_type}</td>
                 <td>${d.fee}</td>
                 <td>${d.available_capacity}</td>
+                <td>${d.available_capacity_dose1}</td>
+                <td>${d.available_capacity_dose2}</td>
                 <td>${d.vaccine}</td>
                 <td>${d.date}</td>
                 <td>${d.min_age_limit}</td>
