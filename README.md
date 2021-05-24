@@ -25,22 +25,22 @@ curl --location --request GET 'http://localhost:3000/findByDistrict.json?distric
 Note: Date should be in YYYY/MM/DD format
 
 5. Notify & Fetch for list of Pincodes :: 
-curl --location --request POST 'http://localhost:3000/notifyForPincodes.json' \
+curl --location --request POST 'http://localhost:3000/notifyForPincodes.json?age_group=18' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "pincodes": ["560017", "560038", "560075"],
     "mobile": "9090909090",
-    "date": "2020-05-12",
+    "date": "2020-05-24",
     "email": "sagar123@domain.com"
 }'
 
 6. Notify & Fetch for list of districts :: 
-curl --location --request POST 'http://localhost:3000/notifyForDistricts.json' \
+curl --location --request POST 'http://localhost:3000/notifyForDistricts.json?age_group=45' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "districts": ["264", "274", "294"],
     "mobile": "9090909090",
-    "date": "2020-05-12",
+    "date": "2020-05-24",
     "email": "sagar123@domain.com"
 }'
 
